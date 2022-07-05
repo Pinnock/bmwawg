@@ -1,1 +1,1 @@
-Source code from Udemy course: *Building Modern Web Applications in Go (Golang)*
+Source code from Udemy course: *Building Modern Web Applications with Go (Golang)*
