@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/pinnock/bmwawg/pkg/config"
-	"github.com/pinnock/bmwawg/pkg/handlers"
 	"github.com/pinnock/bmwawg/pkg/render"
 )
 
@@ -22,10 +21,13 @@ func main() {
 	}
 	render.SetConfig(cfg)
 
-	h := handlers.NewHandlers(cfg)
-	http.HandleFunc("/", h.Home)
-	http.HandleFunc("/about", h.About)
+	svr := &http.Server{
+		Addr:    port,
+		Handler: routes(cfg),
+	}
 
 	log.Printf("Starting web server on port %s\n", port)
-	http.ListenAndServe(port, nil)
+	if err := svr.ListenAndServe(); err != nil {
+		log.Fatalln(err)
+	}
 }
