@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 
 	"github.com/pinnock/bmwawg/pkg/config"
+	"github.com/pinnock/bmwawg/pkg/models"
 )
 
 var appConf *config.AppConfig
@@ -15,7 +16,15 @@ func SetConfig(cfg *config.AppConfig) {
 	appConf = cfg
 }
 
-func RenderTemplate(w http.ResponseWriter, tmpl string) {
+func addDefaultData(td *models.TemplateData) {
+
+}
+
+func RenderTemplate(
+	w http.ResponseWriter,
+	tmpl string,
+	d *models.TemplateData,
+) {
 	var cache map[string]*template.Template
 	var err error
 
@@ -33,7 +42,9 @@ func RenderTemplate(w http.ResponseWriter, tmpl string) {
 		log.Fatalf("template %s not found in template cache\n", tmpl)
 	}
 
-	if err := t.Execute(w, nil); err != nil {
+	addDefaultData(d)
+
+	if err := t.Execute(w, d); err != nil {
 		log.Println(err)
 	}
 }
