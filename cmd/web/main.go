@@ -4,12 +4,22 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/pinnock/bmwawg/pkg/config"
 	"github.com/pinnock/bmwawg/pkg/handlers"
+	"github.com/pinnock/bmwawg/pkg/render"
 )
 
 const port string = ":8080"
 
 func main() {
+
+	tc, err := render.CreateTemplateCache()
+	if err != nil {
+		log.Fatalf("failed to create template cache: %v\n", err)
+	}
+	cfg := config.AppConfig{}
+	cfg.TemplateCache = tc
+
 	http.HandleFunc("/", handlers.Home)
 	http.HandleFunc("/about", handlers.About)
 
