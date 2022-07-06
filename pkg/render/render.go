@@ -1,58 +1,55 @@
 package render
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
+	"path/filepath"
 )
 
-func RenderTemplate2(w http.ResponseWriter, tmpl string) {
-	parsedTemplate, err := template.ParseFiles(
-		"./templates/"+tmpl,
-		"./templates/base.layout.gohtml",
-	)
+func RenderTemplate(w http.ResponseWriter, tmpl string) {
+	cache, err := createTemplateCache()
 	if err != nil {
-		log.Printf("error parsing template files: %v\n", err)
-		return
+		log.Fatalln(err)
 	}
 
-	err = parsedTemplate.Execute(w, nil)
-	if err != nil {
-		log.Printf("error applying parsed template: %v\n", err)
-	}
-}
-
-var tc = make(map[string]*template.Template)
-
-func RenderTemplate(w http.ResponseWriter, t string) {
-	// check to see if template is already isCached
-	_, isCached := tc[t]
-	if !isCached {
-		log.Printf("creating and caching template: %s\n", t)
-		if err := cacheTemplate(t); err != nil {
-			log.Println(err)
-		}
-	} else {
-		log.Printf("using cached template: %s\n", t)
+	t, ok := cache[tmpl]
+	if !ok {
+		log.Fatalln(err)
 	}
 
-	if err := tc[t].Execute(w, nil); err != nil {
+	if err = t.Execute(w, nil); err != nil {
 		log.Println(err)
 	}
 }
 
-func cacheTemplate(t string) error {
-	tt := []string{
-		fmt.Sprintf("./templates/%s", t),
-		"./templates/base.layout.gohtml",
-	}
+func createTemplateCache() (map[string]*template.Template, error) {
+	cache := map[string]*template.Template{}
 
-	tmpl, err := template.ParseFiles(tt...)
+	pages, err := filepath.Glob("./templates/*.page.gohtml")
 	if err != nil {
-		return err
+		return cache, err
 	}
 
-	tc[t] = tmpl
-	return nil
+	for _, pg := range pages {
+		name := filepath.Base(pg)
+		ts, err := template.New(name).ParseFiles(pg)
+		if err != nil {
+			return cache, err
+		}
+
+		matches, err := filepath.Glob("./templates/*.layout.gohtml")
+		if err != nil {
+			return cache, err
+		}
+
+		if len(matches) > 0 {
+			ts, err = ts.ParseGlob("./templates/*.layout.gohtml")
+			if err != nil {
+				return cache, err
+			}
+		}
+		cache[name] = ts
+	}
+	return cache, nil
 }
