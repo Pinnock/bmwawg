@@ -12,16 +12,19 @@ import (
 const port string = ":8080"
 
 func main() {
-
 	tc, err := render.CreateTemplateCache()
 	if err != nil {
 		log.Fatalf("failed to create template cache: %v\n", err)
 	}
-	cfg := config.AppConfig{}
-	cfg.TemplateCache = tc
+	cfg := &config.AppConfig{
+		TemplateCache: tc,
+		UseCache:      false,
+	}
+	render.SetConfig(cfg)
 
-	http.HandleFunc("/", handlers.Home)
-	http.HandleFunc("/about", handlers.About)
+	h := handlers.NewHandlers(cfg)
+	http.HandleFunc("/", h.Home)
+	http.HandleFunc("/about", h.About)
 
 	log.Printf("Starting web server on port %s\n", port)
 	http.ListenAndServe(port, nil)

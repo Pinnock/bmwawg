@@ -5,20 +5,35 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
+
+	"github.com/pinnock/bmwawg/pkg/config"
 )
 
+var appConf *config.AppConfig
+
+func SetConfig(cfg *config.AppConfig) {
+	appConf = cfg
+}
+
 func RenderTemplate(w http.ResponseWriter, tmpl string) {
-	cache, err := CreateTemplateCache()
-	if err != nil {
-		log.Fatalln(err)
+	var cache map[string]*template.Template
+	var err error
+
+	if appConf.UseCache {
+		cache = appConf.TemplateCache
+	} else {
+		cache, err = CreateTemplateCache()
+		if err != nil {
+			log.Fatalln("failed to create template cache")
+		}
 	}
 
 	t, ok := cache[tmpl]
 	if !ok {
-		log.Fatalln(err)
+		log.Fatalf("template %s not found in template cache\n", tmpl)
 	}
 
-	if err = t.Execute(w, nil); err != nil {
+	if err := t.Execute(w, nil); err != nil {
 		log.Println(err)
 	}
 }
