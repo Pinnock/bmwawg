@@ -14,6 +14,8 @@ func routes(c *config.AppConfig) http.Handler {
 
 	mux := chi.NewRouter()
 	mux.Use(middleware.Recoverer)
+	mux.Use(LogRequest)
+	mux.Use(NoSurf)
 	mux.Get("/", http.HandlerFunc(h.Home))
 	mux.Get("/about", http.HandlerFunc(h.About))
 	return mux
