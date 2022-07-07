@@ -20,6 +20,9 @@ func NewHandlers(c *config.AppConfig) *Handlers {
 
 // Home is the handler for the Home page
 func (h *Handlers) Home(w http.ResponseWriter, r *http.Request) {
+	remoteIP := r.RemoteAddr
+	h.appCfg.Session.Put(r.Context(), "remote_ip", remoteIP)
+
 	render.RenderTemplate(w, "home.page.gohtml", &models.TemplateData{})
 }
 
@@ -27,6 +30,8 @@ func (h *Handlers) Home(w http.ResponseWriter, r *http.Request) {
 func (h *Handlers) About(w http.ResponseWriter, r *http.Request) {
 	strData := map[string]string{}
 	strData["test"] = "This is a test"
+	strData["remote_ip"] = h.appCfg.Session.GetString(r.Context(), "remote_ip")
+
 	render.RenderTemplate(
 		w,
 		"about.page.gohtml",
