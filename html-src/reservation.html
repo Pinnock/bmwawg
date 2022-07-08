@@ -30,6 +30,11 @@
     .room-image {
       width: 50%;
     }
+
+    .red-text {
+      color: red;
+    }
+
   </style>
 
 </head>
@@ -82,17 +87,23 @@
         <h1>Search for Availability</h1>
         <form action="make-reservation.html" method="post">
           <div class="row mb-3" id="reservation-dates">
-
-              <div class="col">
-                <input type="text" class="form-control" name="start" placeholder="Check-in Date">              
-              </div>
-              <div class="col">
-                <input type="text" class="form-control" name="end" placeholder="Check-out Date">  
-              </div>      
-
+  
+            <div class="col">
+              <input type="text" class="form-control" name="start" placeholder="Check-in Date">
+            </div>
+            <div class="col">
+              <input type="text" class="form-control" name="end" placeholder="Check-out Date">
+            </div>
           </div>
           <button type="submit" class="btn btn-primary">Search Availability</button>
         </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p>
+          <button id="color-btn" class="btn btn-outline-secondary">Click Me</button>
+        </p>
       </div>
     </div>
   </div>
@@ -113,7 +124,14 @@
   <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker-full.min.js">    
   </script>
   <script src="https://unpkg.com/notie"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
+    console.log("I'm printing from javascript");      
+    
+    document.getElementById("color-btn").addEventListener("click", function(){      
+      notifyModal("Error", "Do you want to continue", "error", "Cool")
+    })
+
     const elem = document.getElementById('reservation-dates');
     const rangepicker = new DateRangePicker(elem, {
       // ...options
@@ -125,7 +143,15 @@
         text: msg,
       })
     }
-
+    
+    function notifyModal(title, text, icon, confirmBtnTxt) {
+      Swal.fire({
+        title: title,
+        text: text,
+        icon: icon,
+        confirmButtonText: confirmBtnTxt
+      })
+    }
   </script>
 </body>
 
