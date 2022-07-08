@@ -11,6 +11,13 @@
   
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/css/datepicker-bs5.min.css">
 
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
+  <style>
+    /* override styles here */
+    .notie-container {
+      box-shadow: none;
+    }
+  </style>
   <style>
     .page-footer {
       height: 5em;
@@ -24,6 +31,7 @@
       width: 50%;
     }
   </style>
+
 </head>
 
 <body>
@@ -104,11 +112,20 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker-full.min.js">    
   </script>
+  <script src="https://unpkg.com/notie"></script>
   <script>
     const elem = document.getElementById('reservation-dates');
     const rangepicker = new DateRangePicker(elem, {
       // ...options
     });
+
+    function notify(msg, msgType) {
+      notie.alert({
+        type: msgType,
+        text: msg,
+      })
+    }
+
   </script>
 </body>
 
