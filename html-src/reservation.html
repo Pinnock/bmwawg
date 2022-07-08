@@ -126,10 +126,12 @@
   <script src="https://unpkg.com/notie"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
-    console.log("I'm printing from javascript");      
     
+    let attention = Prompt();
+
     document.getElementById("color-btn").addEventListener("click", function(){      
-      notifyModal("Error", "Do you want to continue", "error", "Cool")
+      // notifyModal("Error", "Do you want to continue", "error", "Cool")
+      attention.toast()
     })
 
     const elem = document.getElementById('reservation-dates');
@@ -143,7 +145,7 @@
         text: msg,
       })
     }
-    
+
     function notifyModal(title, text, icon, confirmBtnTxt) {
       Swal.fire({
         title: title,
@@ -151,6 +153,21 @@
         icon: icon,
         confirmButtonText: confirmBtnTxt
       })
+    }
+
+    function Prompt() {
+      let toast = function() {
+        console.log("clicked button and got toast")
+      }
+
+      let success = function() {
+        console.log("clicked button and got success")
+      }
+
+      return {
+        toast: toast,
+        success: success
+      }
     }
   </script>
 </body>
