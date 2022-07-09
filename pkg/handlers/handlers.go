@@ -38,3 +38,33 @@ func (h *Handlers) About(w http.ResponseWriter, r *http.Request) {
 		&models.TemplateData{StringData: strData},
 	)
 }
+
+func (h *Handlers) MontegoBaySuite(w http.ResponseWriter, r *http.Request) {
+
+	render.RenderTemplate(w, "montego-bay-suite.page.gohtml", &models.TemplateData{})
+}
+
+func (h *Handlers) PortRoyalSuite(w http.ResponseWriter, r *http.Request) {
+
+	render.RenderTemplate(w, "port-royal-suite.page.gohtml", &models.TemplateData{})
+}
+
+func (h *Handlers) NegrilBungalow(w http.ResponseWriter, r *http.Request) {
+
+	render.RenderTemplate(w, "negril-bungalow.page.gohtml", &models.TemplateData{})
+}
+
+func (h *Handlers) SearchAvailability(w http.ResponseWriter, r *http.Request) {
+
+	render.RenderTemplate(w, "search-availability.page.gohtml", &models.TemplateData{})
+}
+
+func (h *Handlers) MakeReservation(w http.ResponseWriter, r *http.Request) {
+
+	render.RenderTemplate(w, "make-reservation.page.gohtml", &models.TemplateData{})
+}
+
+func (h *Handlers) Contact(w http.ResponseWriter, r *http.Request) {
+
+	render.RenderTemplate(w, "contact.page.gohtml", &models.TemplateData{})
+}

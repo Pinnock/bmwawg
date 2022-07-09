@@ -1,0 +1,19 @@
+.page-footer {
+    height: 5em;
+    background-color: lightblue;
+    margin-top: 1.5em;
+    padding: 1em;
+    font-size: small;
+  }
+
+  .room-image {
+    width: 50%;
+  }
+
+  .red-text {
+    color: red;
+  }
+
+  .no-scroll {
+    overflow: hidden;
+  }

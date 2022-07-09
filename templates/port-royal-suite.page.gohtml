@@ -1,0 +1,61 @@
+{{template "base" .}}
+
+{{define "content"}}
+<div class="container">
+
+    <div class="row">
+      <div class="col">
+        <img 
+          src="/static/img/port-royal-suite.png" alt="room image" 
+          class="img-fluid mx-auto d-block room-image img-thumbnail"
+        >
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h1 class="text-center mt-4">Port Royal Suite</h1>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident 
+          illo dignissimos accusamus vero dolor aliquid natus incidunt iste 
+          corporis, error itaque nesciunt similique minus qui, aut debitis 
+          molestiae temporibus, saepe illum amet eligendi quas quam dicta totam.
+          Omnis, voluptatum laboriosam assumenda, ullam nesciunt aliquid 
+          accusamus nisi sequi fugiat aperiam animi sint sapiente reiciendis 
+          labore vel odit maiores cumque totam qui quos blanditiis rem debitis. 
+          Ut distinctio cum nobis architecto, necessitatibus hic qui 
+          consequuntur quaerat ducimus iste ea quis vitae corrupti nesciunt esse
+          harum facere quas? In dolore minus voluptate maxime quia?
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col text-center">
+        <a id="check-availability-btn" href="#" class="btn btn-success">Check Availability</a>
+      </div>
+    </div>
+  </div>
+  {{end}}
+  
+  {{define "js"}}
+  <script>
+    document.getElementById("check-availability-btn").addEventListener("click", function () {
+      let html = `
+        <form id="check-availability-form" action="" method="post" novalidate 
+          class="needs-validation no-scroll">
+            <div class="row" id="reservation-dates-modal">
+              <div class="col">
+                <input required disabled class="form-control" type="text" name="start" id="start" 
+                  placeholder="Check-in Date">                
+              </div>
+              <div class="col">
+                <input required disabled class="form-control" type="text" name="end" id="end" 
+                  placeholder="Check-out Date">                
+              </div>
+            </div>
+        </form>
+      `
+      attention.custom({ msg: html, title: "Choose Dates" });
+    })
+  </script>
+  {{end}}
+  
