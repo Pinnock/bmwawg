@@ -17,7 +17,6 @@ func routes(c *config.AppConfig) http.Handler {
 	mux.Use(middleware.Recoverer)
 	mux.Use(NoSurf)
 	mux.Use(SessionLoadAndSave)
-	// mux.Use(LogRequest)
 
 	mux.Get("/", http.HandlerFunc(h.Home))
 	mux.Get("/about", http.HandlerFunc(h.About))
@@ -25,6 +24,7 @@ func routes(c *config.AppConfig) http.Handler {
 	mux.Get("/port-royal-suite", http.HandlerFunc(h.PortRoyalSuite))
 	mux.Get("/negril-bungalow", http.HandlerFunc(h.NegrilBungalow))
 	mux.Get("/search-availability", http.HandlerFunc(h.SearchAvailability))
+	mux.Post("/search-availability", http.HandlerFunc(h.PostSearchAvailability))
 	mux.Get("/make-reservation", http.HandlerFunc(h.MakeReservation))
 	mux.Get("/contact", http.HandlerFunc(h.Contact))
 

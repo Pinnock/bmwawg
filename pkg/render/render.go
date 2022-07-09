@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"path/filepath"
 
+	"github.com/justinas/nosurf"
 	"github.com/pinnock/bmwawg/pkg/config"
 	"github.com/pinnock/bmwawg/pkg/models"
 )
@@ -16,12 +17,13 @@ func SetConfig(cfg *config.AppConfig) {
 	appConf = cfg
 }
 
-func addDefaultData(td *models.TemplateData) {
-
+func addDefaultData(td *models.TemplateData, r *http.Request) {
+	td.CSRFToken = nosurf.Token(r)
 }
 
 func RenderTemplate(
 	w http.ResponseWriter,
+	r *http.Request,
 	tmpl string,
 	d *models.TemplateData,
 ) {
@@ -42,7 +44,7 @@ func RenderTemplate(
 		log.Fatalf("template %s not found in template cache\n", tmpl)
 	}
 
-	addDefaultData(d)
+	addDefaultData(d, r)
 
 	if err := t.Execute(w, d); err != nil {
 		log.Println(err)
