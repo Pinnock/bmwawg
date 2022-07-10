@@ -30,6 +30,7 @@ func routes(c *config.AppConfig) http.Handler {
 		http.HandlerFunc(h.SearchAvailabilityJSON),
 	)
 	mux.Get("/make-reservation", http.HandlerFunc(h.MakeReservation))
+	mux.Post("/make-reservation", http.HandlerFunc(h.PostMakeReservation))
 	mux.Get("/contact", http.HandlerFunc(h.Contact))
 
 	serveStaticFiles := http.StripPrefix(

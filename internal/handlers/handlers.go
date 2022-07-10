@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/pinnock/bmwawg/internal/config"
+	"github.com/pinnock/bmwawg/internal/forms"
 	"github.com/pinnock/bmwawg/internal/models"
 	"github.com/pinnock/bmwawg/internal/render"
 )
@@ -95,8 +96,14 @@ func (h *Handlers) PostSearchAvailability(
 
 func (h *Handlers) MakeReservation(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(
-		w, r, "make-reservation.page.gohtml", &models.TemplateData{},
+		w, r, "make-reservation.page.gohtml", &models.TemplateData{
+			FormInfo: forms.New(nil),
+		},
 	)
+}
+
+func (h *Handlers) PostMakeReservation(w http.ResponseWriter, r *http.Request) {
+
 }
 
 func (h *Handlers) Contact(w http.ResponseWriter, r *http.Request) {
