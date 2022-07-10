@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/alexedwards/scs/v2"
-	"github.com/pinnock/bmwawg/pkg/config"
-	"github.com/pinnock/bmwawg/pkg/render"
+	"github.com/pinnock/bmwawg/internal/config"
+	"github.com/pinnock/bmwawg/internal/render"
 )
 
 const port string = ":8080"

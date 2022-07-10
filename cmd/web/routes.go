@@ -5,8 +5,8 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/pinnock/bmwawg/pkg/config"
-	"github.com/pinnock/bmwawg/pkg/handlers"
+	"github.com/pinnock/bmwawg/internal/config"
+	"github.com/pinnock/bmwawg/internal/handlers"
 )
 
 func routes(c *config.AppConfig) http.Handler {

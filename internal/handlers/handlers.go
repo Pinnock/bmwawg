@@ -6,9 +6,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/pinnock/bmwawg/pkg/config"
-	"github.com/pinnock/bmwawg/pkg/models"
-	"github.com/pinnock/bmwawg/pkg/render"
+	"github.com/pinnock/bmwawg/internal/config"
+	"github.com/pinnock/bmwawg/internal/models"
+	"github.com/pinnock/bmwawg/internal/render"
 )
 
 type Handlers struct {

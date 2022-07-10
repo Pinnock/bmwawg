@@ -7,8 +7,8 @@ import (
 	"path/filepath"
 
 	"github.com/justinas/nosurf"
-	"github.com/pinnock/bmwawg/pkg/config"
-	"github.com/pinnock/bmwawg/pkg/models"
+	"github.com/pinnock/bmwawg/internal/config"
+	"github.com/pinnock/bmwawg/internal/models"
 )
 
 var appConf *config.AppConfig
