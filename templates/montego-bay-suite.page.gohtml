@@ -41,16 +41,28 @@
           <div class="row" id="reservation-dates-modal">
             <div class="col">
               <input required disabled class="form-control" type="text" name="start" id="start" 
-                placeholder="Check-in Date">                
+                placeholder="Check-in Date" autocomplete="off">                
             </div>
             <div class="col">
               <input required disabled class="form-control" type="text" name="end" id="end" 
-                placeholder="Check-out Date">                
+                placeholder="Check-out Date" autocomplete="off">                
             </div>
           </div>
       </form>
     `
-    attention.custom({ msg: html, title: "Choose Dates" });
+    attention.custom({
+      msg: html, 
+      title: "Choose Dates",
+      callback: (result) => {
+        fetch("/search-availability-json")
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          console.log(data.ok);
+          console.log(data.message);
+        })
+      }
+    });
   })
 </script>
 {{end}}
