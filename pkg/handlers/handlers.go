@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/pinnock/bmwawg/pkg/config"
@@ -60,6 +62,27 @@ func (h *Handlers) SearchAvailability(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(
 		w, r, "search-availability.page.gohtml", &models.TemplateData{},
 	)
+}
+
+type availabilityResponse struct {
+	OK      bool   `json:"ok"`
+	Message string `json:"message"`
+}
+
+func (h *Handlers) SearchAvailabilityJSON(
+	w http.ResponseWriter, r *http.Request,
+) {
+	resp := availabilityResponse{
+		OK:      true,
+		Message: "Available!",
+	}
+
+	jsonResp, err := json.MarshalIndent(resp, "", "  ")
+	if err != nil {
+		log.Println(err)
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(jsonResp)
 }
 
 func (h *Handlers) PostSearchAvailability(
