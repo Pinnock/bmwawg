@@ -25,7 +25,7 @@ func routes(c *config.AppConfig) http.Handler {
 	mux.Get("/negril-bungalow", http.HandlerFunc(h.NegrilBungalow))
 	mux.Get("/search-availability", http.HandlerFunc(h.SearchAvailability))
 	mux.Post("/search-availability", http.HandlerFunc(h.PostSearchAvailability))
-	mux.Get(
+	mux.Post(
 		"/search-availability-json",
 		http.HandlerFunc(h.SearchAvailabilityJSON),
 	)

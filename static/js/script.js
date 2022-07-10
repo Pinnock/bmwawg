@@ -78,15 +78,14 @@ function Prompt() {
             focusConfirm: false,
             showCancelButton: true,
             willOpen: () => {
-                const resDates = document.getElementById("reservation-dates-modal")
-                const datePicker = new DateRangePicker(
-                    resDates,
-                    { format: "mm/dd/yyyy", showOnFocus: true, orientation: "top" },
-                )
+                if (c.willOpen !== undefined) {
+                    c.willOpen();
+                }
             },
             didOpen: () => {
-                document.getElementById("start").removeAttribute("disabled");
-                document.getElementById("end").removeAttribute("disabled");
+                if (c.didOpen !== undefined) {
+                    c.didOpen()
+                }
             },
             preConfirm: () => {
                 return [
