@@ -95,9 +95,12 @@ func (h *Handlers) PostSearchAvailability(
 }
 
 func (h *Handlers) MakeReservation(w http.ResponseWriter, r *http.Request) {
+	data := map[string]interface{}{}
+	data["reservation"] = models.Reservation{}
 	render.RenderTemplate(
 		w, r, "make-reservation.page.gohtml", &models.TemplateData{
-			FormInfo: forms.New(nil),
+			FormInfo:    forms.New(nil),
+			GenericData: data,
 		},
 	)
 }
@@ -116,7 +119,9 @@ func (h *Handlers) PostMakeReservation(w http.ResponseWriter, r *http.Request) {
 	}
 
 	info := forms.New(r.PostForm)
-	info.HasValue("first-name", r)
+
+	info.Require("first-name", "last-name", "phone")
+	info.HasMinLength("first-name", 3, r)
 	if !info.Valid() {
 		data := map[string]interface{}{}
 		data["reservation"] = reservation
