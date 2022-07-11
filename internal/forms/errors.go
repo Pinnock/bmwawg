@@ -6,10 +6,10 @@ func (e errors) Add(field, errmsg string) {
 	e[field] = append(e[field], errmsg)
 }
 
-func (e errors) Get(field string) []string {
+func (e errors) Get(field string) string {
 	_, ok := e[field]
 	if !ok {
-		return []string{}
+		return ""
 	}
-	return e[field]
+	return e[field][0]
 }

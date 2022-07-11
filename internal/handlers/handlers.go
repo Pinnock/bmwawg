@@ -103,7 +103,32 @@ func (h *Handlers) MakeReservation(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handlers) PostMakeReservation(w http.ResponseWriter, r *http.Request) {
+	if err := r.ParseForm(); err != nil {
+		log.Println(err)
+		return
+	}
 
+	reservation := models.Reservation{
+		FirstName: r.Form.Get("first-name"),
+		LastName:  r.Form.Get("last-name"),
+		Phone:     r.Form.Get("phone"),
+		Email:     r.Form.Get("email"),
+	}
+
+	info := forms.New(r.PostForm)
+	info.HasValue("first-name", r)
+	if !info.Valid() {
+		data := map[string]interface{}{}
+		data["reservation"] = reservation
+
+		render.RenderTemplate(
+			w, r, "make-reservation.page.gohtml", &models.TemplateData{
+				FormInfo:    info,
+				GenericData: data,
+			},
+		)
+		return
+	}
 }
 
 func (h *Handlers) Contact(w http.ResponseWriter, r *http.Request) {
